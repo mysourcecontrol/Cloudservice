@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="SampleCloudService2" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2015-04.2.6">
+  <LoadBalancerProbes>
+    <LoadBalancerProbe name="MyProbe" intervalInSeconds="15" timeoutInSeconds="60" port="30000" protocol="http" path="/" />
+  </LoadBalancerProbes>
+  <WebRole name="SampleWebApi" vmsize="Small">
+    <Sites>
+      <Site name="Web">
+        <Bindings>
+          <Binding name="Endpoint1" endpointName="httpsinput" />
+          <Binding name="Endpoint1" endpointName="httpinternal" />
+        </Bindings>
+      </Site>
+    </Sites>
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+    </ConfigurationSettings>
+    <Endpoints>
+      <InputEndpoint name="httpsinput" protocol="https" port="443" loadBalancer="MyILB" loadBalancerProbe="MyProbe" certificate="httpsinternal" />
+      <InternalEndpoint name="httpinternal" protocol="http" port="30000" />
+    </Endpoints>
+    <Certificates>
+      <Certificate name="httpsinternal" storeLocation="LocalMachine" storeName="My" />
+    </Certificates>
+    <Imports>
+      <Import moduleName="RemoteAccess" />
+      <Import moduleName="RemoteForwarder" />
+    </Imports>
+  </WebRole>
+</ServiceDefinition>

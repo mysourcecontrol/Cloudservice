@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="SampleCloudService2" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2015-04.2.6">
+  <Role name="SampleWebApi">
+    <Instances count="3" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=samplecloudappk;AccountKey=c2RnWXtjGd6OjGnwG7+CnaCmtLytSpDOwVzQJGVEy/wQE5HgqDYeY7aidpHHPeVlCxRyMtv7b2Fh/3qgqicc9w==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="kammadanam" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEH4jgj6rLCWTQf6knh3TNx8wDQYJKoZIhvcNAQEBBQAEggEAUFzDauxH4mD2eD69pVJB2s+RGhDUfqbxhXXtOZoy3wVKW2bOrtVwZksaT33OF1vWvmgglRGdkcWOv0oBpQlqm2mxHkZzFQbD8h1FRDS4c4XEhUisAg28CeJURW6QoVbhrymOmT/iGbsrCsyy0ogV8q8pTxsDVu3ogWwqUTNW99Fg0OmAqc8R5xwlJxF2uZ70MNOZaeYHL9Dain+xMtK6Qnw4k7PLFyfW7kw0uhL+t0wpkaYRZUXheXO6Q598mTmoSqVcnuvU/iJarxBqogIZoL6wAkDnafGTsbyK+S5KxMwovXBtDf82B/MEfOLsF92HeNQetWKWxnQP9KFgFTXDzjAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECDl5MS/ZTnOhgBD6AHJqBzMycy7t3f2aomei" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2016-06-10T23:59:59.0000000-04:00" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="httpsinternal" thumbprint="773D28F72FCCC5738A6E68FBED62C75023B27D02" thumbprintAlgorithm="sha1" />
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="6DA2442E9D07BE07404AB14A48D2C9F8E00BEAB9" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+  <NetworkConfiguration>
+    <VirtualNetworkSite name="sample-vnet" />
+    <AddressAssignments>
+      <InstanceAddress roleName="SampleWebApi">
+        <Subnets>
+          <Subnet name="Subnet-1" />
+        </Subnets>
+      </InstanceAddress>
+    </AddressAssignments>
+    <LoadBalancers>
+      <LoadBalancer name="MyILB">
+        <FrontendIPConfiguration type="private" subnet="Subnet-1" staticVirtualNetworkIPAddress="10.0.0.20" />
+      </LoadBalancer>
+    </LoadBalancers>
+  </NetworkConfiguration>
+</ServiceConfiguration>
